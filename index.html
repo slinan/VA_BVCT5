@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BVC Movimiento bursátil en Febrero de 2016</title>
+    <script src="jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="multiline.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link href="nv/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="nv/nv.d3.js" id="nv"></script>
+    <script src="stacked.js" charset="utf-8"></script>
+  <script src="multiline.js" charset="utf-8"></script>
+        <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        #chart2{
+            margin: 100px;
+            padding: 20px;
+            height: 80%;
+            width: 80%;
+
+        }
+    </style>
+
+
+</head>
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">BVC Bolsa de vallores de Colombia</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+      </div>
+    </nav>
+
+    <div class="container">
+        <br>
+        <div class="row">
+      <h1> Variación en el volumen de acciones transadas durante febrero de 2016 </h1>
+  </div>
+    </div>
+    <svg id="chart2"></svg>
+
+<div class="container">
+<small>
+  Universidad de los Andes - Colombia
+</small>
+
+
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    d3.csv('pib.csv', function(error, data) {
+    data.forEach(function (d) {
+        d.hour = +d.hour;
+        d.variableA = +d.variableA;
+        d.variableB = +d.variableB;
+        d.variableC = +d.variableC;
+        d.variableD = +d.variableD;
+    });
+
+    var chart = makeLineChart(data, 'year', {
+        'Variación en la captación de impuestos': {column: 'crecimientoImpuestos'},
+        'Variación del PIB': {column: 'crecimientoPIB'}
+    }, {xAxis: 'Año', yAxis: 'Porcentaje de crecimiento (Sobre 100)'});
+    chart.bind("#chart-line1");
+    chart.render();
+
+});
+
+    window.dispatchEvent(new Event('resize'));
+</script>
+</body>
+</html>
